@@ -54,7 +54,14 @@ with open(csvpath, newline="") as csvfile:
 output_file = os.path.join("election_results.txt")
 
 # Open Output File
-with open(output_file, "o") as datafile:
-    writer = csv.writer(datafile)
+writer = open(output_file, mode = "w")
 
 # Print Results into Output File
+writer.write("Election Results" + "\n")
+writer.write(break_line + "\n")
+writer.write(f"Total Votes: " + str(votes) + "\n")
+for name, num in vote_percent.items():
+    writer.write(name + ": " + num + "\n")
+writer.write(break_line + "\n")
+writer.write(f"Winner: " + str(winner) + "\n")
+writer.write(break_line)
