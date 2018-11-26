@@ -7,10 +7,10 @@ import os
 
 csvpath = os.path.join("..", "Resources", "election_data.csv")
 
-# Define What We Are Looking For
+# Define some of our Variables
 
 candidates = []
-votes = 0
+votes = -1
 vote_count = {}
 vote_percent = {}
 
@@ -32,11 +32,11 @@ with open(csvpath, newline="") as csvfile:
             vote_count[row[2]] = vote_count[row[2]] + 1
 
 # Calculations for Percentage of Vote
-    for key, value in vote_count.items():
-        vote_percent[key] = str(round(((value/votes)*100),3)) + "% ("+str(value) + ")"
+    for name, num in vote_count.items():
+        vote_percent[name] = str(round(((num/votes)*100),3)) + "% ("+str(num) + ")"
 
     # Use Vote Count to Find the Winner
-    winner = max(vote_count.keys(), key=(lambda k: vote_count[k]))
+    winner = max(vote_count.keys(), key=(lambda x: vote_count[x]))
 
     # Create Break Line and Format Print
     break_line = "-------------------------"
@@ -44,9 +44,17 @@ with open(csvpath, newline="") as csvfile:
     print(break_line)
     print(f"Total Votes: " + str(votes))
     print(break_line)
-    for key, val in vote_percent.items():
-        print(key, ":", val)
+    for name, num in vote_percent.items():
+        print(name, ":", num)
     print(break_line)
     print(f"Winner: " + str(winner))
     print(break_line)
 
+# Set Variable for Output File
+output_file = os.path.join("election_results.txt")
+
+# Open Output File
+with open(output_file, "o") as datafile:
+    writer = csv.writer(datafile)
+
+# Print Results into Output File
